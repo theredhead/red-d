@@ -1,10 +1,11 @@
 module red.data.Client;
 
-class Client
+class ConnectionString
 {
-	this()
-	{
-		// Constructor code
-	}
+
+}
+
+abstract class Connector
+{
 }
 

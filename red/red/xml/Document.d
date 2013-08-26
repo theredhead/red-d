@@ -1,6 +1,6 @@
 module red.xml.Document;
 
-class Document
+class Document : INodeFactory
 {
 	this()
 	{

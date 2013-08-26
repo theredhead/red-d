@@ -74,11 +74,20 @@
     <Compile Include="red\xml\Node.d" />
     <Compile Include="red\xml\Element.d" />
     <Compile Include="red\xml\Comment.d" />
-    <Compile Include="red\xml\CDataSection.d" />
     <Compile Include="red\xml\Document.d" />
     <Compile Include="red\xml\Text.d" />
     <Compile Include="red\xml\Reader.d" />
     <Compile Include="red\xml\Writer.d" />
     <Compile Include="red\web\ui\html\Element.d" />
+    <Compile Include="red\web\http\HttpCookie.d" />
+    <Compile Include="red\web\http\HttpSession.d" />
+    <Compile Include="red\web\http\HttpSessionStorage.d" />
+    <Compile Include="red\foundation.d" />
+    <Compile Include="red\web\Url.d" />
+    <Compile Include="red\xml\CharacterDataSection.d" />
+    <Compile Include="red\xml\ProcessingInstruction.d" />
+    <Compile Include="red\xml\DocumentType.d" />
+    <Compile Include="red\xml\INodeFactory.d" />
+    <Compile Include="red\xml\Attribute.d" />
   </ItemGroup>
 </Project>

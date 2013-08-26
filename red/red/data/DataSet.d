@@ -1,5 +1,7 @@
 module red.data.DataSet;
 
+import red.data.DataTable;
+
 class DataSet
 {
 	private DataTable[] _tables;
