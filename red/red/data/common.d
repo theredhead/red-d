@@ -1,0 +1,2 @@
+module red.data.common;
+
