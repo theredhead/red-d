@@ -52,6 +52,7 @@
     <Folder Include="red\data\mysql\" />
     <Folder Include="red\generic\" />
     <Folder Include="red\console\" />
+    <Folder Include="red\web\ui\html\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="red\data\common.d" />
@@ -60,5 +61,24 @@
     <Compile Include="red\data\DataTable.d" />
     <Compile Include="red\data\DataSet.d" />
     <Compile Include="red\generic\LinkedList.d" />
+    <Compile Include="red\console\ConsoleApp.d" />
+    <Compile Include="red\data\Client.d" />
+    <Compile Include="red\data\mysql\MySqlClient.d" />
+    <Compile Include="red\data\sqlite\SqliteClient.d" />
+    <Compile Include="red\web\http\HttpRequest.d" />
+    <Compile Include="red\web\http\HttpResponse.d" />
+    <Compile Include="red\web\http\HttpResponseCode.d" />
+    <Compile Include="red\web\http\HttpServer.d" />
+    <Compile Include="red\web\http\HttpApplication.d" />
+    <Compile Include="red\web\http\HttpRequestHandler.d" />
+    <Compile Include="red\xml\Node.d" />
+    <Compile Include="red\xml\Element.d" />
+    <Compile Include="red\xml\Comment.d" />
+    <Compile Include="red\xml\CDataSection.d" />
+    <Compile Include="red\xml\Document.d" />
+    <Compile Include="red\xml\Text.d" />
+    <Compile Include="red\xml\Reader.d" />
+    <Compile Include="red\xml\Writer.d" />
+    <Compile Include="red\web\ui\html\Element.d" />
   </ItemGroup>
 </Project>
