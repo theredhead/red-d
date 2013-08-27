@@ -89,5 +89,6 @@
     <Compile Include="red\xml\DocumentType.d" />
     <Compile Include="red\xml\INodeFactory.d" />
     <Compile Include="red\xml\Attribute.d" />
+    <Compile Include="red\data\mysql\MySqlDataReader.d" />
   </ItemGroup>
 </Project>
