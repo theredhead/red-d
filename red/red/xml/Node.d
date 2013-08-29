@@ -1,5 +1,7 @@
 module red.xml.Node;
 
+import red.xml.Document;
+
 abstract class Node
 {
 	private Document _ownerDocument;

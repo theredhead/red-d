@@ -1,0 +1,50 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="red.experiments/main.d">
+    <Files>
+      <File FileName="red/red/console/ConsoleApp.d" Line="1" Column="1" />
+      <File FileName="red/red/data/Client.d" Line="121" Column="28" />
+      <File FileName="red/red/data/mysql/MySqlClient.d" Line="29" Column="1" />
+      <File FileName="red/red/data/sqlite/SqliteClient.d" Line="1" Column="1" />
+      <File FileName="red/red/web/http/HttpRequest.d" Line="1" Column="1" />
+      <File FileName="red/red/web/http/HttpResponse.d" Line="1" Column="1" />
+      <File FileName="red/red/web/http/HttpResponseCode.d" Line="1" Column="1" />
+      <File FileName="red/red/web/http/HttpServer.d" Line="1" Column="1" />
+      <File FileName="red/red/web/http/HttpApplication.d" Line="1" Column="1" />
+      <File FileName="red/red/web/http/HttpRequestHandler.d" Line="1" Column="1" />
+      <File FileName="red/red/xml/Node.d" Line="3" Column="25" />
+      <File FileName="red/red/xml/Element.d" Line="6" Column="20" />
+      <File FileName="red/red/xml/Comment.d" Line="1" Column="1" />
+      <File FileName="red/red/xml/CDataSection.d" Line="1" Column="1" />
+      <File FileName="red/red/xml/Document.d" Line="16" Column="23" />
+      <File FileName="red/red/xml/Text.d" Line="1" Column="1" />
+      <File FileName="red/red/xml/Reader.d" Line="1" Column="1" />
+      <File FileName="red/red/xml/Writer.d" Line="1" Column="1" />
+      <File FileName="red/red/web/ui/html/Element.d" Line="11" Column="1" />
+      <File FileName="red/red/data/mysql/MySqlDataReader.d" Line="1" Column="38" />
+      <File FileName="red.experiments/main.d" Line="5" Column="1" />
+      <File FileName="red/red/xml/INodeFactory.d" Line="1" Column="28" />
+      <File FileName="red/red/web/Url.d" Line="65" Column="14" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="red" expanded="True">
+            <Node name="red" expanded="True">
+              <Node name="data" expanded="True">
+                <Node name="mysql" expanded="True" />
+              </Node>
+              <Node name="web" expanded="True" />
+              <Node name="xml" expanded="True" />
+            </Node>
+          </Node>
+          <Node name="red.experiments" expanded="True" selected="True" />
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

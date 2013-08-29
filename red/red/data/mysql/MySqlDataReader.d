@@ -1,4 +1,4 @@
-module red.data.mysql.MySqlClient;
+module red.data.mysql.MySqlDataReader;
 
 import red.data.Client;
 
@@ -14,6 +14,5 @@ class MySqlDataReader : IDataReader
 	
 	public string opIndex(int ix);
 	public string opIndex(string columnName);
-
 }
 

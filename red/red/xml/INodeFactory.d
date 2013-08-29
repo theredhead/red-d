@@ -1,4 +1,4 @@
-module red.xml.IDocumentTypeImplementation;
+module red.xml.INodeFactory;
 
 import red.xml.Element;
 

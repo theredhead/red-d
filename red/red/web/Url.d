@@ -57,12 +57,12 @@ class Url
 
 	protected string toRelativeUrlString()
 	{
-		
+		return "...";
 	}
 
 	protected string toAbsoluteUrlString()
 	{
-		
+		return "://...";
 	}
 }
 
