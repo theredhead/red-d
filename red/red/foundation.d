@@ -1,8 +1,19 @@
 module red.foundation;
 
-import std.datetime;
+import std.string;
 
-void foo()
-{
-	DateTime d = DateTime();
+template readUntil(T) if (isSomeString(T)) {
+
+	T readUntil(ref T haystack, T needle)
+	{
+		// readuntil("Hello, World!", ", ")
+		// haystack := "World!"
+		// result   := "Hello"
+	}
+
+	T readUntil(ref T haystack, T[] needle)
+	{
+		
+	}
+
 }

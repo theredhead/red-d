@@ -3,6 +3,9 @@ module red.data.Client;
 import std.string;
 import std.array;
 
+/++
+ + Used to indicate the current state of a database connection
+ +/
 enum ConnectionState
 {
 	OPENING,
@@ -11,55 +14,89 @@ enum ConnectionState
 	CLOSED
 }
 
-interface IDbClient
+/++
+ + Represents the structure used to communicate queries with a database
+ +/
+public class DbCommand
 {
-	@property public  ConnectionState state();
-	public void connect(string connectionString);
-	public IDataReader execute(string statement);
-	public IDataReader execute(string statement, string[] parameters, string[] arguments);
+	private DbConnection _connection;
+	@property public DbConnection connection() {return _connection;}
+	@property public void connection(DbConnection value) {_connection = value;}
 	
-	public string escape(string dirtyString);
+	private string _commandText;
+	@property public string commandText() {return _commandText;}
+	@property public void commandText(string value) {_commandText = value;}
+	
+	private DbCommandParameterList _parameters;
+	@property public DbCommandParameterList parameters() {return _parameters;}
+	@property protected void parameters(DbCommandParameterList value) {_parameters = value;}
+	
+	public this()
+	{
+		_parameters = new DbCommandParameterList();
+	}
+	
+	public this(DbConnection connection)
+	{
+		this();
+		_connection = connection;
+	}
+	
+	public this(DbConnection connection, string commandText)
+	{
+		this(connection);
+		_commandText = commandText;
+	}
+	
+	public this(DbConnection connection, string commandText, string[string] parameters)
+	{
+		this(connection, commandText);
+		foreach(v, k; parameters)
+		{
+			_parameters.addWithValue(k, v);
+		}
+	}
+	
+	override public string toString()
+	{
+		string result = commandText;
+		foreach(DbCommandParameter p; parameters)
+		{
+			result = result.replace(p.name, connection.quote(connection.escape(p.value)));
+		}
+		return result;
+	}
+}
+
+/++
+ + Provides a skeleton for a database connection class
+ +/
+abstract class DbConnection
+{
+	private ConnectionState _state;
+	@property public ConnectionState state() {return _state;}
+	@property public void state(ConnectionState value) {_state = value;}
+
+	abstract public string escape(string dirty);
+
 	public string quote(string unquoted);
 
-	public void open();
-	public void close();
-}
-
-interface IDbCommand
-{
-	@property public IDbConnection connection();
-	@property public void connection(IDbConnection value);
-
-	@property public string commandText();
-	@property public void commandText(string value);
-	
-	@property public DbCommandParameterList parameters();
-	@property public void parameters(DbCommandParameterList value);
-}
-
-interface IDbConnection
-{
-	public string quote(string unquopted);
-	public string escape(string dirty);
-
-	public IDbCommand createCommand();
-}
-
-abstract class ADbConnection : IDbConnection
-{
-	abstract public IDbCommand createCommand();
-	
-	public IDbCommand createCommand(string commandText)
+	public DbCommand createCommand()
 	{
-		IDbCommand command = createCommand();
+		return new DbCommand();
+	}
+	
+	public DbCommand createCommand(string commandText)
+	{
+		DbCommand command = new DbCommand(this);
 		command.commandText = commandText;
 		return command;
 	}
-
-	public IDbCommand createCommand(string commandText, string[] parameters, string[] arguments)
+	
+	public DbCommand createCommand(string commandText, string[] parameters, string[] arguments)
 	{
-		IDbCommand command = createCommand(commandText);
 		assert(parameters.length == arguments.length);
+		DbCommand command = new DbCommand(this);
 		for(int ix = 0; ix < parameters.length; ix++)
 		{
 			command.parameters.addWithValue(parameters[ix], arguments[ix]);
@@ -68,78 +105,9 @@ abstract class ADbConnection : IDbConnection
 	}
 }
 
-class DbConnection(T : IDbClient) : ADbConnection
-{
-	private T _client;
-	@property protected T client() {return _client;}
-
-	public class DbCommand : IDbCommand
-	{
-		private IDbConnection _connection;
-		@property public IDbConnection connection() {return _connection;}
-		@property public void connection(IDbConnection value) {_connection = value;}
-		
-		private string _commandText;
-		@property public string commandText() {return _commandText;}
-		@property public void commandText(string value) {_commandText = value;}
-		
-		private DbCommandParameterList _parameters;
-		@property public DbCommandParameterList parameters() {return _parameters;}
-		@property protected void parameters(DbCommandParameterList value) {_parameters = value;}
-		
-		public this()
-		{
-			_parameters = new DbCommandParameterList();
-		}
-		
-		public this(DbConnection connection)
-		{
-			this();
-			_connection = connection;
-		}
-		
-		public this(DbConnection connection, string commandText)
-		{
-			this(connection);
-			_commandText = commandText;
-		}
-		
-		public this(DbConnection connection, string commandText, string[string] parameters)
-		{
-			this(connection, commandText);
-			foreach(v, k; parameters)
-			{
-				_parameters.addWithValue(k, v);
-			}
-		}
-		
-		override public string toString()
-		{
-			string result = commandText;
-			foreach(DbCommandParameter p; parameters)
-			{
-				result.replace(p.name, escape(p.value));
-			}
-			return result;
-		}
-	}
-	
-	public string escape(string dirty)
-	{
-		return client.escape(dirty);
-	}
-
-	public string quote(string unquoted)
-	{
-		return client.quote(unquoted);
-	}
-
-	override public IDbCommand createCommand()
-	{
-		return new DbCommand();
-	}
-}
-
+/++
+ + Represents a single parameter in a database command
+ +/
 class DbCommandParameter
 {
 	public this(string name)
@@ -156,14 +124,9 @@ class DbCommandParameter
 	@property public void value(string value) {_value = value;}
 }
 
-static class DbNull
-{
-	@property static public string value()
-	{
-		return DbNull.mangleof;
-	}
-}
-
+/++
+ + Represents a list of parameters in a database commands
+ +/
 class DbCommandParameterList
 {
 	private DbCommandParameter[string] _list;
@@ -199,18 +162,25 @@ class DbCommandParameterList
 	}
 }
 
-
-
+/++
+ + Defines the API for reading results from an executed database command
+ +/
 interface IDataReader
 {
 	@property public size_t recordsAffected();
 	@property public size_t fieldCount();
-
+	
 	@property public bool hasRows();
-
+	
 	public void read();
 	public bool nextResult();
-
+	
 	public string opIndex(int ix);
 	public string opIndex(string columnName);
+	/*
+	public int getInt(int ix);
+	public float getFloat(int ix);
+	public string getString(int ix);
+	*/
 }
+

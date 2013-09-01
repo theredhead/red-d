@@ -2,16 +2,19 @@ module main;
 
 import std.stdio;
 import red.data.common;
-import red.data.MySqlClient;
+import red.data.Client;
+import red.data.mysql.MySqlClient;
 
 void main(string[] args)
 {
+	MySqlConnection connection;
+	DbCommand command;
 
-	auto cn = new MySqlConnection();
-
-	DbCommand command = cn.createCommand("SELECT * FROM people WHERE lastName=:lastName");
-	command.parameters.addWithValue(":lastName", "Herlaar");
-
+	connection = new MySqlConnection();
+	
+	command = connection.createCommand("SELECT * FROM people WHERE email=:email");
+	command.parameters.addWithValue(":email", "kris@theredhead.nl");
+	
 	// Prints "Hello World" string in console
 	writeln(command);
 	
