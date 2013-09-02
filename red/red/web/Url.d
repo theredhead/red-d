@@ -1,5 +1,6 @@
 module red.web.Url;
 
+import std.string;
 /++
  + Defines host name types
  +/
@@ -74,12 +75,49 @@ class Url
 
 	public void parse(string urlString)
 	{
+		long ix;
+		string work = urlString.dup;
+		string queryString = "";
 
+		// take from the front ...
+		if (0 < (ix = work.indexOf("://")))
+		{
+			scheme = work[0 .. ix];
+			work = work[ix + 3 .. $];
+		}
+		if (0 < (ix = work.indexOf("/")))
+		{
+			authority = work[0 .. ix];
+			work = work[ix .. $];
+		}
+
+		// take from the back
+		if (0 < (ix = work.indexOf("#")))
+		{
+			fragment = work[ix .. $];
+			work = work[0 .. ix];
+		}
+		if (0 < (ix = work.indexOf("?")))
+		{
+			queryString = work[ix .. $];
+			work = work[0 .. ix];
+		}
+
+		path = work.split("/");
 	}
 
 	override public string toString()
 	{
-		return "todo";
+		string result = "";
+		if (scheme != "")
+		{
+			result = scheme ~ "://";
+		}
+		result ~= "authority";
+		result ~= path.join("/");
+
+
+		return result;
 	}
 
 	protected string toRelativeUrlString()
