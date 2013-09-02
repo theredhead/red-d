@@ -21,8 +21,6 @@ void main(string[] args)
 	// Prints "Hello World" string in console
 	writeln(command);
 
-
-
 	string test = "http://kris:fietsbel@www.theredhead.nl/blog/archive/2013-01?ordered=chronologically#article-123";
 	Url url = new Url(test);
 
@@ -30,7 +28,7 @@ void main(string[] args)
 	writeln("scheme:    " ~ url.scheme);
 	writeln("authority: " ~ url.authority);
 	writeln("path:      " ~ url.path.join("/"));
-//	writeln("query:     " ~ url.query.join("&"));
+	writeln("query:     " ~ url.queryString);
 	writeln("fragment:  " ~ url.fragment);
 
 	writeln("toString:  " ~ url.toString());

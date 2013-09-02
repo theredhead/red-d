@@ -90,20 +90,45 @@ class Url
 			authority = work[0 .. ix];
 			work = work[ix .. $];
 		}
-
+			
 		// take from the back
 		if (0 < (ix = work.indexOf("#")))
 		{
-			fragment = work[ix .. $];
+			fragment = work[ix + 1.. $];
 			work = work[0 .. ix];
 		}
 		if (0 < (ix = work.indexOf("?")))
 		{
-			queryString = work[ix .. $];
+			query = parseQuery(work[ix .. $]);
 			work = work[0 .. ix];
 		}
 
 		path = work.split("/");
+	}
+
+	public string[string] parseQuery(string queryString)
+	{
+		string[string] result;
+
+		foreach (string bit; queryString.split("&"))
+		{
+			string key = bit[0 .. bit.indexOf("=")];
+			string value = bit[ key.length + 1 .. $];
+
+			result[key] = value;
+		}
+
+		return result;
+	}
+
+	@property string queryString()
+	{
+		string[] bits;
+		foreach (k, v; query)
+		{
+			bits ~= [k ~ "=" ~ v];
+		}
+		return bits.join("&");
 	}
 
 	override public string toString()
@@ -113,9 +138,16 @@ class Url
 		{
 			result = scheme ~ "://";
 		}
-		result ~= "authority";
+		result ~= authority;
 		result ~= path.join("/");
-
+		if (query.length > 0)
+		{
+			result ~= "?" ~ queryString;
+		}
+		if (fragment.length > 0)
+		{
+			result ~= "#" ~ fragment;
+		}
 
 		return result;
 	}
