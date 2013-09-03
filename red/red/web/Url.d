@@ -38,11 +38,55 @@ class Url
 	private string _scheme;
 	@property public string scheme() {return _scheme;}
 	@property public void scheme(string value) {_scheme = value;}
+	
+	@property public string authority() 
+	{
+		string result = "";
+		if (username != "")
+		{
+			result = username;
+			if (password != "")
+			{
+				result ~= ":" ~ password;
+			}
+			result ~= "@";
+		}
+		result ~= hostname;
+		return result;
+	}
+	@property public void authority(string value) 
+	{
+		string work = value.dup;
+		long ix;
+		long subix;
 
-	private string _authority;
-	@property public string authority() {return _authority;}
-	@property public void authority(string value) {_authority = value;}
+		if (0 < (ix = work.indexOf("@")))
+		{
+			if (ix > (subix = work.indexOf(":")))
+			{
+				password = work[subix + 1 .. ix];
+				username = work[0 .. subix];
+			}
+			else
+			{
+				username = work[0 .. ix];
+			}
+			hostname = work[ix + 1 .. $];
+		}
+		else
+		{
+			hostname = value;
+		}
+	}
 
+	private string _username;
+	@property public string username() {return _username;}
+	@property public void username(string value) {_username = value;}
+
+	private string _password;
+	@property public string password() {return _password;}
+	@property public void password(string value) {_password = value;}
+	
 	private string _hostname;
 	@property public string hostname() {return _hostname;}
 	@property public void hostname(string value) {_hostname = value;}
@@ -99,7 +143,7 @@ class Url
 		}
 		if (0 < (ix = work.indexOf("?")))
 		{
-			query = parseQuery(work[ix .. $]);
+			query = parseQuery(work[ix  + 1 .. $]);
 			work = work[0 .. ix];
 		}
 
@@ -150,16 +194,6 @@ class Url
 		}
 
 		return result;
-	}
-
-	protected string toRelativeUrlString()
-	{
-		return "...";
-	}
-
-	protected string toAbsoluteUrlString()
-	{
-		return "://...";
 	}
 }
 

@@ -27,6 +27,11 @@ void main(string[] args)
 	writeln("test:      ["~test~"]");
 	writeln("scheme:    " ~ url.scheme);
 	writeln("authority: " ~ url.authority);
+
+	writeln(" username: " ~ url.username);
+	writeln(" password: " ~ url.password);
+	writeln(" hostname: " ~ url.hostname);
+
 	writeln("path:      " ~ url.path.join("/"));
 	writeln("query:     " ~ url.queryString);
 	writeln("fragment:  " ~ url.fragment);
